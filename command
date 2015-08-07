@@ -3,6 +3,7 @@ type ls
 test if.sh
 test "asdf" == "asdf"
 set -e
+expr 5 + 4
 ar crv libfoo.a a.o b.o
 ranlib libfoo.a
 ldd program
