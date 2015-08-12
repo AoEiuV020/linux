@@ -2,6 +2,7 @@ strace ./hello.out
 type ls
 test if.sh
 test "asdf" == "asdf"
+grep 'he.*o' *
 set -e
 expr 5 + 4
 ar crv libfoo.a a.o b.o

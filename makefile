@@ -16,9 +16,9 @@ else
 	RM=rm -f
 endif
 #######上面是WINDOWS不一样的地方。。。
-n=hello
+n=stat
 $(n).$(TAREXT):$(n).c
-	gcc -Wall -std=c99 --save-temps -o $(n).$(TAREXT) $(n).c
+	gcc -Wall -Wpedantic -std=c99 --save-temps -o $(n).$(TAREXT) $(n).c -L/usr/local/lib 
 	.$(PS)$(n).$(TAREXT)
 .PHONY:clean
 .IGNORE:clean
