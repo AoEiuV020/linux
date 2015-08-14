@@ -5,6 +5,7 @@ test "asdf" == "asdf"
 grep 'he.*o' *
 set -e
 expr 5 + 4
+trap "echo asdf" 15
 ar crv libfoo.a a.o b.o
 ranlib libfoo.a
 ldd program

@@ -16,7 +16,7 @@ else
 	RM=rm -f
 endif
 #######上面是WINDOWS不一样的地方。。。
-n=getoptl
+n=framebuffer
 $(n).$(TAREXT):$(n).c
 	gcc -Wall -Wpedantic -std=c99 --save-temps -o $(n).$(TAREXT) $(n).c -L/usr/local/lib 
 	.$(PS)$(n).$(TAREXT)
