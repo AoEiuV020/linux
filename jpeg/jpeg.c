@@ -28,7 +28,8 @@ int main()
 	printf("fb=%d\n", fb);
 	printf("%u*%u=%u\n", vinfo.xres, vinfo.yres, vinfo.xres * vinfo.yres);
 	printf("vinfo.bits_per_pixel=%u\n", vinfo.bits_per_pixel);
-	printf("finfo.line_length=%u\nvinfo.xres*vinfo.bits_per_pixel/8=%u\n",finfo.line_length,vinfo.xres*vinfo.bits_per_pixel/8);
+	printf("finfo.line_length=%u\n",finfo.line_length);
+	printf("vinfo.xres*vinfo.bits_per_pixel/8=%u\n",vinfo.xres*vinfo.bits_per_pixel/8);
 	fflush(stdout);
 	if(fb==-1)
 	{
