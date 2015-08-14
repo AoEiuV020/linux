@@ -43,13 +43,40 @@ int main(int argc, char **argv)
 	printf("\n");
 	printf("%u*%u=%u\n", vinfo.xres_virtual, vinfo.yres_virtual, vinfo.xres_virtual * vinfo.yres_virtual);
 	printf("%u*%u=%u\n", vinfo.xoffset, vinfo.yoffset, vinfo.xoffset * vinfo.yoffset);
-#define VU32(MEN) printf(#MEN":%u\n",vinfo.MEN)
-#define V1(x,...) VU32(x);V2(__VA_ARGS__) 
-#define V2(x,...)
-	VU32(grayscale);
-	VU32(nonstd);
-	VU32(activate);
-	V1(height);
+#define VARU32(MEN) printf(#MEN":%u\n",vinfo.MEN)
+	VARU32(grayscale);
+	VARU32(nonstd);
+	VARU32(activate);
+	VARU32(height);
+	VARU32(width);
+	VARU32(accel_flags);
+	VARU32(pixclock);
+	VARU32(left_margin);
+	VARU32(right_margin);
+	VARU32(upper_margin);
+	VARU32(lower_margin);
+	VARU32(hsync_len);
+	VARU32(vsync_len);
+	VARU32(sync);
+	VARU32(vmode);
+	VARU32(rotate);
+	VARU32(colorspace);
+	VARU32(reserved[3]);
+	printf("\n");
+#define FARU32(MEN) printf(#MEN":%u\n",finfo.MEN)
+	printf("%s\n",finfo.id);
+	FARU32(smem_len);
+	FARU32(type);
+	FARU32(type_aux);
+	FARU32(visual);
+	FARU32(xpanstep);
+	FARU32(ypanstep);
+	FARU32(line_length);
+	FARU32(mmio_len);//
+	FARU32(accel);
+	FARU32(capabilities);
+	FARU32(reserved[1]);
+	printf("\n");
 	fflush(stdout);
 	return 0;
 }
