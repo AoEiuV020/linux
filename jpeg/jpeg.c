@@ -21,21 +21,22 @@ int main()
 {
 	int fb;
 	fb = open(FB, O_RDONLY);
+	if(fb==-1)
+	{
+		printf("are you root?\n");
+		return -1;
+	}
 	struct fb_var_screeninfo vinfo;
 	struct fb_fix_screeninfo finfo;
 	ioctl(fb, FBIOGET_FSCREENINFO, &finfo);
 	ioctl(fb, FBIOGET_VSCREENINFO, &vinfo);
+	printf("uid=%u,euid=%u;\n",getuid(),geteuid());
 	printf("fb=%d\n", fb);
 	printf("%u*%u=%u\n", vinfo.xres, vinfo.yres, vinfo.xres * vinfo.yres);
 	printf("vinfo.bits_per_pixel=%u\n", vinfo.bits_per_pixel);
 	printf("finfo.line_length=%u\n",finfo.line_length);
 	printf("vinfo.xres*vinfo.bits_per_pixel/8=%u\n",vinfo.xres*vinfo.bits_per_pixel/8);
 	fflush(stdout);
-	if(fb==-1)
-	{
-		printf("are you root?\n");
-		return -1;
-	}
 	unsigned char *screen=(unsigned char*)malloc(vinfo.yres*vinfo.xres*3);
 	for(int i=0;i<vinfo.yres;++i)
 	{

@@ -1,5 +1,5 @@
 include header.mk
-n=hello
+n=temp
 $(n).$(TAREXT):$(n).c
 	gcc -Wall -Wpedantic -std=c99 --save-temps -o $(n).$(TAREXT) $(n).c -L/usr/local/lib 
 	.$(PS)$(n).$(TAREXT)

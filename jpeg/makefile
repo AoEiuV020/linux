@@ -1,5 +1,5 @@
 include ../header.mk
-n=jpeg
+n=jpegview
 $(n).$(TAREXT):$(n).c
 	gcc -Wall -std=c99 --save-temps -o $(n).$(TAREXT) $(n).c -L/usr/local/lib -ljpeg
 	.$(PS)$(n).$(TAREXT)
