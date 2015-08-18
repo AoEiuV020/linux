@@ -38,3 +38,4 @@ badblocks -v /dev/sda1
 rsync -azv -e ssh --delete /mnt/ext/code/git/AoEiuV020.github.io/ 55bc654c7628e1c547000032@atdstudio.xyz:/var/lib/openshift/55bc654c7628e1c547000032/app-root/repo/AoEiuV020
 host www.baidu.com
 iwlist scan
+rfkill block wifi
