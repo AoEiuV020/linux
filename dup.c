@@ -1,17 +1,18 @@
 /*****************************************************
-	^> File Name: ls.c
+	^> File Name: dup.c
 	^> Author: AoEiuV020
 	^> Mail: 490674483@qq.com
-	^> Created Time: 2015/08/19 - 00:31:26
+	^> Created Time: 2015/08/23 - 02:42:18
 ****************************************************/
+
 #include "aoeiuv.h"
 int main(int argc, char **argv)
 {
-	const char *path=".";
-	if(argc>1)
-	{
-		path=argv[1];
-	}
-	avls(path);
+	int fd;
+	fd=open("/tmp/tmp",O_RDONLY|O_CREAT);
+	dup(fd);
+	dup2(fd,88);
+	close(fd);
+	avls("/proc/self/fd");
 	return 0;
 }
