@@ -16,8 +16,12 @@ int main(int argc, char **argv)
 	{
 		return 1;
 	}
-	int fd=open(argv[1],O_WRONLY|O_CREAT);
+	/*
+	int fd;
+	fd=open(argv[1],O_WRONLY|O_CREAT);
 	write(fd,"",0);
 	close(fd);
+	//*/
+	creat(argv[1],0666);
 	return 0;
 }
