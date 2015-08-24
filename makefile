@@ -1,8 +1,8 @@
 include header.mk
-n=dup
+n=sync
 $(n).$(TAREXT):$(n).c aoeiuv.h
-	gcc -Wall -Wpedantic -std=c99 --save-temps -o $(n).$(TAREXT) $(n).c
-	#.$(PS)$(n).$(TAREXT)
+	gcc -Wall -Wpedantic --save-temps -o $(n).$(TAREXT) $(n).c
+	.$(PS)$(n).$(TAREXT)
 .PHONY:clean
 .IGNORE:clean
 clean:

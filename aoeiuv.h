@@ -8,9 +8,9 @@
 #define AOEIUV_H
 
 #include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,9 +41,11 @@ int avout(const char *format,...)
 	int err;
 	va_start(arg,format);
 	fflush(stdout);
+	fsync(STDOUT_FILENO);
 	err=vfprintf(stdout,format,arg);
 	fprintf(stdout,"\n");
 	fflush(stdout);
+	fsync(STDOUT_FILENO);
 	va_end(arg);
 	return err;
 }
@@ -95,7 +97,7 @@ int lspath(const char *path)
 		lstat(file,&lst);
 		printf("%02d %06o %d:%d %s",dirp->d_type,lst.st_mode,lst.st_uid,lst.st_gid,dirp->d_name);
 		if(dirp->d_type==10) /*DT_LNK*/
-		//if(S_ISLNK(lst.st_mode))
+		/*if(S_ISLNK(lst.st_mode)) */
 		{
 			memset(link,0,sizeof(link));
 			readlink(file,link,sizeof(link)-1);

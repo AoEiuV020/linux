@@ -11,6 +11,7 @@ int main(int argc, char **argv)
 {
 	pid_t pid;
 	int status;
+	int i;
 	if((pid=fork())<0)
 	{
 		averr("fork");
@@ -35,6 +36,11 @@ int main(int argc, char **argv)
 			avout("status=%d",status);
 		}
 		avout("father %d",getpid());
+	}
+	for(i=0;i<2;++i)
+	{
+		fork();
+		printf("-");
 	}
 	return 0;
 }
