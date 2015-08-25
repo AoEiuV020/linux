@@ -1,5 +1,5 @@
 include header.mk
-n=sync
+n=ioctl
 $(n).$(TAREXT):$(n).c aoeiuv.h
 	gcc -Wall -Wpedantic --save-temps -o $(n).$(TAREXT) $(n).c
 	.$(PS)$(n).$(TAREXT)

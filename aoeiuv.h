@@ -19,11 +19,13 @@
 #include <signal.h>
 #include <dirent.h>
 
-int averr(const char *format,...);
-int avout(const char *format,...);
-int avls(const char *path);
-int lsfile(const char *file);
-int lspath(const char *path);
+int averr(const char *,...);
+int avout(const char *,...);
+int avls(const char *,...);
+int lsfile(const char *);
+int lspath(const char *);
+int avtmp(char *);
+int avsystem(char *,...);
 
 int averr(const char *format,...)
 {
@@ -49,9 +51,16 @@ int avout(const char *format,...)
 	va_end(arg);
 	return err;
 }
-int avls(const char *path)
+int avls(const char *format,...)
 {
+	char path[256];
+	va_list arg;
 	struct stat st;
+
+	va_start(arg,format);
+	vsnprintf(path,sizeof(path)-1,format,arg);
+	va_end(arg);
+
 	stat(path,&st);
 	if(S_ISDIR(st.st_mode))
 	{
@@ -68,6 +77,8 @@ int lsfile(const char *file)
 	struct stat lst;
 	errno=0;
 	lstat(file,&lst);
+	fflush(stdout);
+	fsync(STDOUT_FILENO);
 	printf("%06o %d:%d %s",lst.st_mode,lst.st_uid,lst.st_gid,file);
 	if(S_ISLNK(lst.st_mode))
 	{
@@ -76,6 +87,8 @@ int lsfile(const char *file)
 		printf(" -> %s",link);
 	}
 	printf("\n");
+	fflush(stdout);
+	fsync(STDOUT_FILENO);
 	return errno;
 }
 int lspath(const char *path)
@@ -91,6 +104,8 @@ int lspath(const char *path)
 		averr("opendir");
 		return errno;
 	}
+	fflush(stdout);
+	fsync(STDOUT_FILENO);
 	while((dirp=readdir(dp))!=NULL)
 	{
 		sprintf(file,"%s/%s",path,dirp->d_name);
@@ -105,8 +120,50 @@ int lspath(const char *path)
 		}
 		printf("\n");
 	}
+	fflush(stdout);
+	fsync(STDOUT_FILENO);
 	closedir(dp);
 	return errno;
+}
+/*
+   int fd;
+   fd=avtmp();
+   |or
+   char *s="/tmp/t-XXXXXX";
+   fd=avtmp(s);
+// */
+int avtmp(char *patharray)
+{
+	int fd;
+	char tmpname[]="/tmp/XXXXXX.avtmp";
+	char *p;
+	p=patharray?patharray:tmpname;
+	fd=patharray?mkstemp(patharray):mkstemps(tmpname,6);
+	if(fd==-1)
+	{
+		averr("make temp %s",p);
+		exit(errno);
+	}
+	if(-1==(unlink(p)))
+	{
+		averr("unlink %s",p);
+		exit(errno);
+	}
+	return fd;
+}
+/*
+   avsystem("ls -al /proc/%d/fd",getpid());
+// */
+int avsystem(char *format,...)
+{
+	va_list arg;
+	int err;
+	char cmd[1024];
+	va_start(arg,format);
+	vsnprintf(cmd,sizeof(cmd)-1,format,arg);
+	err=system(cmd);
+	va_end(arg);
+	return err;
 }
 
 #endif
