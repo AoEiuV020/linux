@@ -1,5 +1,5 @@
 include header.mk
-n=chmod
+n=chown
 $(n).$(TAREXT):$(n).c aoeiuv.h
 	gcc -Wall -Wpedantic --std=gnu11 --save-temps -o $(n).$(TAREXT) $(n).c
 	.$(PS)$(n).$(TAREXT)
