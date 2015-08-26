@@ -19,6 +19,18 @@
 #include <signal.h>
 #include <dirent.h>
 
+#ifndef __STDC_VERSION__
+#define __STDC_VERSION__ 0L
+#endif
+#define STDC99 199901L
+#if __STDC_VERSION__ > STDC99
+#define avsyscall(syscall,...) \
+	if(syscall(__VA_ARGS__)==-1) \
+	{\
+		averr(#syscall);\
+	}
+#endif
+
 int averr(const char *,...);
 int avout(const char *,...);
 int avls(const char *,...);
@@ -61,7 +73,11 @@ int avls(const char *format,...)
 	vsnprintf(path,sizeof(path)-1,format,arg);
 	va_end(arg);
 
-	stat(path,&st);
+	if(stat(path,&st)==-1)
+	{
+		averr("stat");
+		exit(errno);
+	}
 	if(S_ISDIR(st.st_mode))
 	{
 		return lspath(path);

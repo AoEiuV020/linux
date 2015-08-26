@@ -1,15 +1,13 @@
 /*****************************************************
-	^> File Name: temp.c
+	^> File Name: access.c
 	^> Author: AoEiuV020
 	^> Mail: 490674483@qq.com
-	^> Created Time: 2015/08/14 - 15:44:00
+	^> Created Time: 2015/08/26 - 23:17:12
 ****************************************************/
-#include <fcntl.h>
-#include <stdlib.h>
+
+#include "aoeiuv.h"
 int main(int argc, char **argv)
 {
-	int mask;
-	umask(0077);
-	system("bash");
+	avout("%d",access(__FILE__,F_OK));
 	return 0;
 }
