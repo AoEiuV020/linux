@@ -15,20 +15,20 @@ int main(int argc, char **argv)
 
 	avout("mode=07777");
 	avout("A:umask==%04o",mask);
-	unlink(UMASK(A));
 	avsyscall(creat,UMASK(A),07777);
 
 	mask=umask(0000);
 	avout("B:umask==%04o",0000);
-	unlink(UMASK(B));
 	avsyscall(creat,UMASK(B),07777);
 
 	umask(mask);
 	avout("C:umask==%04o",mask);
-	unlink(UMASK(C));
 	avsyscall(creat,UMASK(C),07777);
 
 	avsystem("ls -al %s",UMASK(*));
+	unlink(UMASK(A));
+	unlink(UMASK(B));
+	unlink(UMASK(C));
 	return 0;
 }
 

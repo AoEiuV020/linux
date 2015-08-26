@@ -39,3 +39,4 @@ rsync -azv -e ssh --delete /mnt/ext/code/git/AoEiuV020.github.io/ 55bc654c7628e1
 host www.baidu.com
 iwlist scan
 rfkill block wifi
+gcc -nostartfiles -e aoeiuv temp.c

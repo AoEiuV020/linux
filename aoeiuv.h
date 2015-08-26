@@ -24,10 +24,13 @@
 #endif
 #define STDC99 199901L
 #if __STDC_VERSION__ > STDC99
+
+int avscret;/*aoeiuv syscall return*/
 #define avsyscall(syscall,...) \
-	if(syscall(__VA_ARGS__)==-1) \
+	if((avscret=(syscall(__VA_ARGS__)))==-1) \
 	{\
 		averr(#syscall);\
+        exit(errno);\
 	}
 #endif
 
