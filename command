@@ -40,3 +40,4 @@ host www.baidu.com
 iwlist scan
 rfkill block wifi
 gcc -nostartfiles -e aoeiuv temp.c
+modprobe vboxdrv
