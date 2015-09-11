@@ -26,12 +26,25 @@
 #if __STDC_VERSION__ > STDC99
 
 int avscret;/*aoeiuv syscall return*/
+/*
 #define avsyscall(syscall,...) \
 	if((avscret=(syscall(__VA_ARGS__)))==-1) \
 	{\
 		averr(#syscall);\
         exit(errno);\
 	}
+// */
+int _avscret; /*should not be use, just for -Wunused-value*/
+#define avsyscall(syscall,...) \
+	(\
+	 _avscret=\
+	 ((((avscret=(syscall(__VA_ARGS__)))==-1)?\
+	   (\
+		averr(#syscall),\
+		exit(errno),\
+		0)\
+	   :0),avscret)\
+	)
 #endif
 
 int averr(const char *,...);

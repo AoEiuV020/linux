@@ -1,8 +1,8 @@
 include header.mk
-n=chown
+n=truncate
 $(n).$(TAREXT):$(n).c aoeiuv.h
 	gcc -Wall -Wpedantic --std=gnu11 --save-temps -o $(n).$(TAREXT) $(n).c
-	.$(PS)$(n).$(TAREXT)
+	#.$(PS)$(n).$(TAREXT)
 .PHONY:clean
 .IGNORE:clean
 clean:
