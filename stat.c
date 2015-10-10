@@ -38,7 +38,7 @@ void statshow(struct stat *pstat)
 	showtime(&pstat->st_mtime);//modify,last write?
 	showtime(&pstat->st_ctime);//change,last change?
 	printf("%ld*%ld=%ld;",pstat->st_blksize,pstat->st_blocks,pstat->st_blksize*pstat->st_blocks);
-	printf("%d;",pstat->st_nlink);
+	printf("%lu;",pstat->st_nlink);
 	printf("\n");
 }
 void showtime(time_t *time)

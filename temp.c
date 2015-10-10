@@ -7,10 +7,6 @@
 #include "aoeiuv.h"
 int main(int argc, char **argv)
 {
-	int fd;
-	fd=open("temp",O_WRONLY|O_CREAT,0777);
-	lseek(fd,100,SEEK_END);
-	write(fd,&fd,1);
-	close(fd);
+	avls("/tmp");
 	return 0;
 }
