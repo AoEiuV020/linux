@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 				   标准输入重定向从匿名管道pin[0]读，
 				   标准输出重定向与入命名管道fdfifouout,
 				// */
-				fdfifoout=open(fifo_out,O_WRONLY);
+				fdfifoout=open(fifo_out,O_WRONLY|O_CREAT|O_TRUNC,0666);
 				dup2(fdfifoout,STDOUT_FILENO);
 				dup2(pin[0],STDIN_FILENO);
 				close(pin[0]);
@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 				execlp("sh","sh","-c",cmd,NULL);
 				//system(cmd);
 			}
-			fdfifoin=open(fifo_in,O_RDONLY|O_CREAT|O_TRUNC,0666);
+			fdfifoin=open(fifo_in,O_RDONLY);
 			close(pin[0]);
 			memset(buf,0,sizeof(buf));
 			sprintf(path,"/proc/%d/exe",pid);
