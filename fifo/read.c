@@ -14,11 +14,10 @@ int main(int argc, char **argv)
 	memset(buf,0,sizeof(buf));
 	while(1)
 	{
-		if(n=read(STDIN_FILENO,buf,sizeof(buf)-1))
+		if((n=read(STDIN_FILENO,buf,sizeof(buf)-1))>0)
 		{
 			buf[n]=0;
 			write(STDOUT_FILENO,buf,strlen(buf));
-			fflush(stdout);
 		}
 		lseek(STDIN_FILENO,0L,SEEK_CUR);
 	}
