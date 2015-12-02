@@ -26,7 +26,7 @@ else
 	RM=rm -f
 endif
 #######上面是WINDOWS不一样的地方。。。
-n=two.c
+n=read.c
 SRCEXT:=$(suffix $(n))
 CC=gcc
 CXX=g++
@@ -40,11 +40,11 @@ endif
 #######这个C决定是c还是c++。。。
 
 INCLUDES=-I.
-CFLAGS=-Wall -std=c99 -O2 -g $(INCLUDES)
+CFLAGS=-Wall -std=gnu99 -O2 -g $(INCLUDES)
 CXXFLAGS=-Wall -std=c++11 -O2 -g $(INCLUDES)
 TARGET=$(notdir $(CURDIR)).$(TAREXT)
 OBJS=$(patsubst %$(SRCEXT),%.o,$(n))
-LIBS=-levent
+LIBS=
 LDFLAGS=$(LIBS) -L.
 
 
@@ -57,7 +57,7 @@ ECHO=echo $@:$? done...
 
 
 all:$(TARGET)
-	$(RUN)$<
+	#$(RUN)$<
 	@$(ECHO)
 
 

@@ -26,7 +26,7 @@ else
 	RM=rm -f
 endif
 #######上面是WINDOWS不一样的地方。。。
-n=two.c
+n=get.c
 SRCEXT:=$(suffix $(n))
 CC=gcc
 CXX=g++
@@ -44,7 +44,7 @@ CFLAGS=-Wall -std=c99 -O2 -g $(INCLUDES)
 CXXFLAGS=-Wall -std=c++11 -O2 -g $(INCLUDES)
 TARGET=$(notdir $(CURDIR)).$(TAREXT)
 OBJS=$(patsubst %$(SRCEXT),%.o,$(n))
-LIBS=-levent
+LIBS=-lcurl
 LDFLAGS=$(LIBS) -L.
 
 

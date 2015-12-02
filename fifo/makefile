@@ -1,5 +1,5 @@
 include ../header.mk
-n=fifoexec
+n=newread
 $(n).$(TAREXT):$(n).c
 	gcc -Wall -Wpedantic --std=gnu11 --save-temps -o $(n).$(TAREXT) $(n).c
 	#.$(PS)$(n).$(TAREXT)

@@ -23,9 +23,10 @@
 #define __STDC_VERSION__ 0L
 #endif
 #define STDC99 199901L
-#if __STDC_VERSION__ > STDC99
 
-int avscret;/*aoeiuv syscall return*/
+#if __STDC_VERSION__ >= STDC99
+int avscret;//aoeiuv syscall return
+int _avscret; //should not be use, just for -Wunused-value
 /*
 #define avsyscall(syscall,...) \
 	if((avscret=(syscall(__VA_ARGS__)))==-1) \
@@ -34,7 +35,6 @@ int avscret;/*aoeiuv syscall return*/
         exit(errno);\
 	}
 // */
-int _avscret; /*should not be use, just for -Wunused-value*/
 #define avsyscall(syscall,...) \
 	(\
 	 _avscret=\
@@ -45,6 +45,7 @@ int _avscret; /*should not be use, just for -Wunused-value*/
 		0)\
 	   :0),avscret)\
 	)
+// */
 #endif
 
 int averr(const char *,...);

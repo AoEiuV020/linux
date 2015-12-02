@@ -26,7 +26,7 @@ else
 	RM=rm -f
 endif
 #######上面是WINDOWS不一样的地方。。。
-n=two.c
+n=closetty.c
 SRCEXT:=$(suffix $(n))
 CC=gcc
 CXX=g++
@@ -40,11 +40,12 @@ endif
 #######这个C决定是c还是c++。。。
 
 INCLUDES=-I.
-CFLAGS=-Wall -std=c99 -O2 -g $(INCLUDES)
+CFLAGS=-Wall -std=gnu99 -O2 -g $(INCLUDES)
 CXXFLAGS=-Wall -std=c++11 -O2 -g $(INCLUDES)
-TARGET=$(notdir $(CURDIR)).$(TAREXT)
+#TARGET=$(notdir $(CURDIR)).$(TAREXT)
+TARGET=$(patsubst %$(SRCEXT),%.$(TAREXT),$(n))
 OBJS=$(patsubst %$(SRCEXT),%.o,$(n))
-LIBS=-levent
+LIBS=
 LDFLAGS=$(LIBS) -L.
 
 
@@ -57,7 +58,7 @@ ECHO=echo $@:$? done...
 
 
 all:$(TARGET)
-	$(RUN)$<
+	#$(RUN)$<
 	@$(ECHO)
 
 
@@ -70,7 +71,7 @@ $(OBJS):%.o:%$(SRCEXT)
 
 
 clean:
-	-@$(RM) $(OBJS) $(TARGET)
+	-@$(RM) *.o *.s *.i *.ii *.out *.exe *.d
 	@$(ECHO)
 
 chname:

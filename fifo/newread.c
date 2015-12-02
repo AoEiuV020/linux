@@ -1,16 +1,20 @@
 /*****************************************************
-	^> File Name: read.c
+	^> File Name: newread.c
 	^> Author: AoEiuV020
 	^> Mail: 490674483@qq.com
-	^> Created Time: 2015/10/11 - 03:17:54
+	^> Created Time: 2015/12/02 - 17:58:48
 ****************************************************/
 #include <unistd.h>
+#include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
 int main(int argc, char **argv)
 {
+	char stdinpath[512]={0};
 	char buf[512];
 	int n;
+	readlink("/proc/self/fd/0",stdinpath,sizeof(stdinpath)-1);
+	printf("%s,\n",stdinpath);
 	memset(buf,0,sizeof(buf));
 	while(1)
 	{
@@ -19,7 +23,11 @@ int main(int argc, char **argv)
 			buf[n]=0;
 			write(STDOUT_FILENO,buf,strlen(buf));
 		}
-		//lseek(STDIN_FILENO,0L,SEEK_CUR);
+		else
+		{
+			close(0);
+			open(stdinpath,O_RDONLY);
+		}
 	}
 	return 0;
 }
