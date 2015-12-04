@@ -6,13 +6,22 @@
 ****************************************************/
 #include <stdio.h>
 #include <event.h>
+#include <unistd.h>
 void foo(int sock,short event,void *arg)
 {
-	printf("foo...\n");
+	while(1)
+	{
+		printf("foo...\n");
+		sleep(1);
+	}
 }
 void bar(int sock,short event,void *arg)
 {
-	printf("bar...\n");
+	while(1)
+	{
+		printf("bar...\n");
+		sleep(1);
+	}
 }
 
 int main(int argc, char **argv)
