@@ -26,10 +26,12 @@ int main(int argc, char **argv)
 	sai.sin_family=AF_INET;
 	sai.sin_port=htons(PORT);
 	sai.sin_addr.s_addr=inet_addr(IP);
-	avout("family=%x,port=%hu,addr=%s;",sai.sin_family,ntohs(sai.sin_port),inet_ntoa(sai.sin_addr));
+	favout(stderr,"family=%x,port=%hu,addr=%s;",sai.sin_family,ntohs(sai.sin_port),inet_ntoa(sai.sin_addr));
 	int sfd;
 	sfd=avsyscall(socket,AF_INET,SOCK_STREAM,0);
-	avout("sfd=%d,",sfd);
+	favout(stderr,"sfd=%d,",sfd);
+	int flag=1;
+	avsyscall(setsockopt,sfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));
 	avsyscall(bind,sfd,(const struct sockaddr *)&sai,sizeof(sai));
 	avsyscall(listen,sfd,3);
 
@@ -60,12 +62,13 @@ int main(int argc, char **argv)
 						buf[len]=0;
 						if(!strcmp(buf,"exit\n"))
 						{
-							avout("logout...");
+							favout(stderr,"logout...");
 							exit(0);
 						}
 					}
 					else
 					{
+						favout(stderr,"end of stdin...");
 						FD_CLR(STDIN_FILENO,&set);
 						avsyscall(close,STDIN_FILENO);
 					}
@@ -73,7 +76,7 @@ int main(int argc, char **argv)
 				else if(fdi==sfd)
 				{
 					newfd=avsyscall(accept,sfd,(struct sockaddr *)&csai,&clen);
-					avout("new client,%s:%hu",inet_ntoa(csai.sin_addr),ntohs(csai.sin_port));
+					favout(stderr,"new client,%s:%hu",inet_ntoa(csai.sin_addr),ntohs(csai.sin_port));
 					FD_SET(newfd,&set);
 					if(newfd>fdmax)
 					{
@@ -89,8 +92,9 @@ int main(int argc, char **argv)
 					}
 					else
 					{
-						FD_CLR(sfd,&set);
-						avsyscall(close,sfd);
+						favout(stderr,"end of %d...",fdi);
+						FD_CLR(fdi,&set);
+						avsyscall(close,fdi);
 					}
 				}
 			}

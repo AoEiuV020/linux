@@ -26,10 +26,10 @@ int main(int argc, char **argv)
 	sai.sin_family=AF_INET;
 	sai.sin_port=htons(PORT);
 	sai.sin_addr.s_addr=inet_addr(IP);
-	avout("family=%x,port=%hu,addr=%s;",sai.sin_family,ntohs(sai.sin_port),inet_ntoa(sai.sin_addr));
+	favout(stderr,"family=%x,port=%hu,addr=%s;",sai.sin_family,ntohs(sai.sin_port),inet_ntoa(sai.sin_addr));
 	int cfd;
 	cfd=avsyscall(socket,AF_INET,SOCK_STREAM,0);
-	avout("cfd=%d,",cfd);
+	favout(stderr,"cfd=%d,",cfd);
 	avsyscall(connect,cfd,(const struct sockaddr *)&sai,sizeof(sai));
 	
 	fd_set set,readset;//socketfd,stdinfd,
@@ -53,8 +53,10 @@ int main(int argc, char **argv)
 			}
 			else
 			{
+				favout(stderr,"end of stdin...");
 				FD_CLR(STDIN_FILENO,&set);
 				avsyscall(close,STDIN_FILENO);
+				break;
 			}
 		}
 		if(FD_ISSET(cfd,&readset))
@@ -66,6 +68,7 @@ int main(int argc, char **argv)
 			}
 			else
 			{
+				favout(stderr,"end of %d...",cfd);
 				FD_CLR(cfd,&set);
 				avsyscall(close,cfd);
 				break;

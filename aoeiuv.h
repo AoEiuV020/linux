@@ -50,6 +50,7 @@ int _avscret; //should not be use, just for -Wunused-value
 
 int averr(const char *,...);
 int avout(const char *,...);
+int favout(FILE *,const char *,...);
 int avls(const char *,...);
 int lsfile(const char *);
 int lspath(const char *);
@@ -76,6 +77,20 @@ int avout(const char *format,...)
 	err=vfprintf(stdout,format,arg);
 	fprintf(stdout,"\n");
 	fflush(stdout);
+	fsync(STDOUT_FILENO);
+	va_end(arg);
+	return err;
+}
+int favout(FILE *fp,const char *format,...)
+{
+	va_list arg;
+	int err;
+	va_start(arg,format);
+	fflush(fp);
+	fsync(STDOUT_FILENO);
+	err=vfprintf(fp,format,arg);
+	fprintf(fp,"\n");
+	fflush(fp);
 	fsync(STDOUT_FILENO);
 	va_end(arg);
 	return err;
