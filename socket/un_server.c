@@ -13,7 +13,7 @@
 #include <event.h>
 int main(int argc, char **argv)
 {
-	char PATH[256]="sock";
+	char PATH[256]="/tmp/sock";
 	if(argc>1)
 	{
 		sprintf(PATH,"%s",argv[1]);
