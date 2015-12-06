@@ -10,6 +10,7 @@
 #include <sys/socket.h>
 int main(int argc, char **argv)
 {
+	struct sockaddr_un sau;
 	printf("sizeof un=%d,\n",sizeof(struct sockaddr_un));
 	printf("sizeof in=%d,\n",sizeof(struct sockaddr_in));
 	return 0;

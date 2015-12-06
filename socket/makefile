@@ -26,7 +26,7 @@ else
 	RM=rm -f
 endif
 #######上面是WINDOWS不一样的地方。。。
-n=in_server.c
+n=un_server.c
 SRCEXT:=$(suffix $(n))
 CC=gcc
 CXX=g++
