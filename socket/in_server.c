@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					if(0<(len=avsyscall(read,fdi,buf,sizeof(buf)-1)))
+					if(0<(len=read(fdi,buf,sizeof(buf)-1)))
 					{
 						buf[len]=0;
 						avsyscall(write,STDOUT_FILENO,buf,len);
