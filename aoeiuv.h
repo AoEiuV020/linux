@@ -23,9 +23,10 @@
 #define __STDC_VERSION__ 0L
 #endif
 #define STDC99 199901L
-#if __STDC_VERSION__ > STDC99
 
-int avscret;/*aoeiuv syscall return*/
+#if __STDC_VERSION__ >= STDC99
+int avscret;//aoeiuv syscall return
+int _avscret; //should not be use, just for -Wunused-value
 /*
 #define avsyscall(syscall,...) \
 	if((avscret=(syscall(__VA_ARGS__)))==-1) \
@@ -34,7 +35,6 @@ int avscret;/*aoeiuv syscall return*/
         exit(errno);\
 	}
 // */
-int _avscret; /*should not be use, just for -Wunused-value*/
 #define avsyscall(syscall,...) \
 	(\
 	 _avscret=\
@@ -45,10 +45,12 @@ int _avscret; /*should not be use, just for -Wunused-value*/
 		0)\
 	   :0),avscret)\
 	)
+// */
 #endif
 
 int averr(const char *,...);
 int avout(const char *,...);
+int favout(FILE *,const char *,...);
 int avls(const char *,...);
 int lsfile(const char *);
 int lspath(const char *);
@@ -75,6 +77,20 @@ int avout(const char *format,...)
 	err=vfprintf(stdout,format,arg);
 	fprintf(stdout,"\n");
 	fflush(stdout);
+	fsync(STDOUT_FILENO);
+	va_end(arg);
+	return err;
+}
+int favout(FILE *fp,const char *format,...)
+{
+	va_list arg;
+	int err;
+	va_start(arg,format);
+	fflush(fp);
+	fsync(STDOUT_FILENO);
+	err=vfprintf(fp,format,arg);
+	fprintf(fp,"\n");
+	fflush(fp);
 	fsync(STDOUT_FILENO);
 	va_end(arg);
 	return err;
